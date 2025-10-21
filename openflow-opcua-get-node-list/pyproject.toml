@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling", "hatch-datavolo-nar"]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "openflow-opcua-get-node-list"
+dynamic = ["version"]
+description = "Openflow (NiFi) Python source processor that browses an OPC UA endpoint and emits a node list (JSON/CSV/XML) or writes directly to Snowflake."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+authors = [{ name = "Kevin Mahnke" }]
+keywords = ["nifi", "openflow", "opcua", "iiot", "snowflake", "python", "source"]
+dependencies = [
+  "asyncua>=1.0.0,<2.0.0",
+  "cryptography>=41,<43",
+]
+
+[tool.hatch.version]
+path = "src/processors/__about__.py"
+
+
+[tool.hatch.build.targets.nar]
+# Point to the code folder that contains your processor(s)
+packages = ["src/processors"]
+
+# All dependencies that should be vendored inside the NAR
+dependencies = [
+  "pandas>=2.2,<2.3",
+  "pyarrow>=16,<18",
+  "snowflake-connector-python>=3.10,<4",
+]
+entry_points = [
+  "net.ksmcloud.opcua.OPCUAGetNodeList=processors.opcua_get_node_list:OPCUAGetNodeList"
+]
+
