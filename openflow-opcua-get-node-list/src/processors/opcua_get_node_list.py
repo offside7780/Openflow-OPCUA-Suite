@@ -84,7 +84,7 @@ class OPCUAGetNodeList(FlowFileSource):
         implements = ["org.apache.nifi.python.processor.FlowFileSource"]
 
     class ProcessorDetails:
-        version = "1.0.0"
+        version = "1.0.1"
         description = "Browses an OPC UA server namespace to discover available nodes and metadata."
         tags = ["opcua", "browse", "discovery", "iiot", "uns"]
         dependencies = [
@@ -120,7 +120,7 @@ class OPCUAGetNodeList(FlowFileSource):
                 description="e.g., opc.tcp://host:port/OPCUA/Server",
                 required=True,
                 validators=[non_empty] if non_empty else [],
-                default_value="opc.tcp://69.11.87.213:53530/OPCUA/SimulationServer",
+                default_value="",
             )
             self.PROP_SERVER_URI = PropertyDescriptor(
                 name="Server URI Override",

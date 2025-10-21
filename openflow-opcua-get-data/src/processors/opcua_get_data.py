@@ -77,7 +77,7 @@ class OPCUAGetData(FlowFileSource):
         implements = ["org.apache.nifi.python.processor.FlowFileSource"]
 
     class ProcessorDetails:
-        version = "1.0.0"
+        version = "1.0.1"
         description = "Reads current values (value, timestamps, quality) for a list of OPC UA NodeIds."
         tags = ["opcua", "read", "data", "iiot", "uns"]
         dependencies = [
@@ -118,7 +118,7 @@ class OPCUAGetData(FlowFileSource):
                 description="e.g., opc.tcp://host:port/OPCUA/Server",
                 required=True,
                 validators=[non_empty] if non_empty else [],
-                default_value="opc.tcp://69.11.87.213:53530/OPCUA/SimulationServer",
+                default_value="",
             )
             # NEW: match get-node-list
             self.PROP_SERVER_URI = PropertyDescriptor(
