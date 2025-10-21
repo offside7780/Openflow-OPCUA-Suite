@@ -84,7 +84,7 @@ class OPCUAGetNodeList(FlowFileSource):
         implements = ["org.apache.nifi.python.processor.FlowFileSource"]
 
     class ProcessorDetails:
-        version = "0.2.5"
+        version = "1.0.0"
         description = "Browses an OPC UA server namespace to discover available nodes and metadata."
         tags = ["opcua", "browse", "discovery", "iiot", "uns"]
         dependencies = [

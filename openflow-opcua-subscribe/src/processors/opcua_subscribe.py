@@ -50,7 +50,7 @@ class OPCUASubscribe(FlowFileSource):
         implements = ["org.apache.nifi.python.processor.FlowFileSource"]
 
     class ProcessorDetails:
-        version = "0.7.0"
+        version = "1.0.0"
         description = (
             "Continuous OPC UA subscription with client/server deadband options. "
             "Output as JSON/CSV/XML or write directly to Snowflake."
