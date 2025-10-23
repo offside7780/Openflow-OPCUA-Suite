@@ -2,37 +2,49 @@
 requires = ["hatchling", "hatch-datavolo-nar"]
 build-backend = "hatchling.build"
 
-
 [project]
 name = "openflow-opcua-subscribe"
 dynamic = ["version"]
-description = "Openflow (NiFi) Python source processor that subscribes to node value changes outside of deadband and return (JSON/CSV/XML) or writes directly to Snowflake."
+description = "OpenFlow (NiFi) Python source that subscribes to OPC UA and writes directly to Snowflake with lean deps."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 authors = [{ name = "Kevin Mahnke" }]
 keywords = ["nifi", "openflow", "opcua", "iiot", "snowflake", "python", "source"]
+
+# Use ranges so pip can pick the latest compatible versions,
+# while guarding against known forward-incompatibility windows.
 dependencies = [
-  "asyncua>=1.0.0,<2.0.0",
-  "cryptography>=41,<43",
-  "cffi>=1.15,<2.0",
-  "pycparser>=2.21,<3.0"
+  # OPC UA client
+  "asyncua>=1.0.6,<2.0.0",
+
+  # Snowflake connector (3.x is current major; <4 to avoid future breakage)
+  "snowflake-connector-python>=3.10,<4",
+
+  # Crypto stack: keep modern but avoid bleeding-edge jump risks
+  "cryptography>=42,<45",
+  "cffi>=1.17,<2",
+  "pyopenssl>=24,<25",
+
+  # Resolver-friendly pins for common nets deps used by Snowflake & requests
+  "requests>=2.32,<3",
+  "urllib3>=2.2,<3",
+  "charset-normalizer>=3.3,<4",
+  "idna>=3.6,<4",
+  "certifi>=2024.6,<2026",
+
+  # Misc transitive caps often pulled by Snowflake
+  "typing_extensions>=4.12,<5",
+  "filelock>=3.15,<4",
+  "platformdirs>=4.2,<5",
+  "pytz>=2024.1,<2026",
+  "pyjwt>=2.8,<3",
 ]
 
 [tool.hatch.version]
 path = "src/processors/__about__.py"
 
-
 [tool.hatch.build.targets.nar]
-# Point to the code folder that contains your processor(s)
 packages = ["src/processors"]
-
-# All dependencies that should be vendored inside the NAR
-dependencies = [
-  "pandas>=2.2,<2.3",
-  "pyarrow>=16,<18",
-  "snowflake-connector-python>=3.10,<4",
-]
 entry_points = [
   "net.ksmcloud.opcua.OPCUASubscribe=processors.opcua_subscribe:OPCUASubscribe"
 ]
-
